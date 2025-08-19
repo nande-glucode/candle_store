@@ -23,6 +23,8 @@ default: &default
 development:
   <<: *default
   database: candle_store_development
+  username: CANDLE_STORE_DATABASE_USERNAME
+  password: CANDLE_STORE_DATABASE_PASSWORD
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.

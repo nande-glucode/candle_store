@@ -1,0 +1,83 @@
+// config/tailwind.config.js
+const defaultTheme = require('tailwindcss/defaultTheme')
+
+module.exports = {
+  content: [
+    './public/*.html',
+    './app/helpers/**/*.rb',
+    './app/javascript/**/*.js',
+    './app/views/**/*.{erb,haml,html,slim}'
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+      },
+      colors: {
+        // Main nude/brown palette
+        nude: {
+          50: '#faf9f7',   // Lightest cream
+          100: '#f5f2ed',  // Very light beige
+          200: '#ede6d9',  // Light nude
+          300: '#e0d4c1',  // Medium nude
+          400: '#d1c0a3',  // Warm nude
+          500: '#c4ab85',  // Main nude
+          600: '#b8956a',  // Darker nude
+          700: '#a67c52',  // Brown-nude
+          800: '#8b6640',  // Dark brown
+          900: '#6d4c2f',  // Darkest brown
+        },
+        brown: {
+          50: '#fdf8f6',   // Lightest brown
+          100: '#f2e8e5',  // Light brown
+          200: '#eaddd7',  // Soft brown
+          300: '#e0cfc5',  // Medium light brown
+          400: '#d2bab0',  // Medium brown
+          500: '#bfa094',  // Main brown
+          600: '#a18072',  // Darker brown
+          700: '#977669',  // Rich brown
+          800: '#846358',  // Dark brown
+          900: '#43302b',  // Darkest brown
+        },
+        // Accent colors
+        cream: {
+          50: '#fffefb',
+          100: '#fffdf7',
+          200: '#fefbf0',
+          300: '#fdf7e7',
+          400: '#fbf1dc',
+          500: '#f7e9c9',
+          600: '#f0ddb0',
+          700: '#e6cb8b',
+          800: '#d4b552',
+          900: '#b8941f',
+        }
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.6s ease-out',
+        'slide-up': 'slideUp 0.4s ease-out',
+        'scale-in': 'scaleIn 0.3s ease-out',
+        'bounce-gentle': 'bounceGentle 2s infinite',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideUp: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        scaleIn: {
+          '0%': { opacity: '0', transform: 'scale(0.95)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
+        bounceGentle: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-5px)' },
+        },
+      },
+    },
+  },
+  plugins: []
+}

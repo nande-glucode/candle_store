@@ -1,4 +1,63 @@
-<div>
-  <h1 class="font-bold text-4xl">Products#index</h1>
-  <p>Find me in app/views/products/index.html.erb</p>
+<div class="min-h-screen">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Page Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+        <% if @current_category %>
+          <%= @current_category.titleize %>
+        <% else %>
+          All
+        <% end %>
+        <span class="text-gradient">Candles</span>
+      </h1>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Discover our carefully curated collection of premium candles
+      </p>
+    </div>
+    
+    <!-- Filters -->
+    <div class="flex flex-wrap justify-center gap-3 mb-12">
+      <%= link_to 'All', products_path, 
+          class: "px-6 py-3 rounded-full font-medium transition-all duration-200 #{@current_category ? 'bg-white text-brown-700 hover:bg-nude-50 border border-nude-300' : 'bg-gradient-to-r from-brown-600 to-nude-700 text-white shadow-lg'}" %>
+      
+      <% @categories.each do |category| %>
+        <%= link_to category.titleize, products_path(category: category), 
+            class: "px-6 py-3 rounded-full font-medium transition-all duration-200 #{@current_category == category ? 'bg-gradient-to-r from-brown-600 to-nude-700 text-white shadow-lg' : 'bg-white text-brown-700 hover:bg-nude-50 border border-nude-300'}" %>
+      <% end %>
+    </div>
+    
+    <!-- Search Results Info -->
+    <% if @search_term.present? %>
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8">
+        <p class="text-blue-800">
+          <strong><%= @products.count %></strong> results found for 
+          "<strong><%= @search_term %></strong>"
+          <%= link_to 'Clear search', products_path, class: 'text-blue-600 hover:underline ml-2' %>
+        </p>
+      </div>
+    <% end %>
+    
+    <!-- Products Grid -->
+    <% if @products.any? %>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <% @products.each do |product| %>
+          <%= render 'shared/product_card', product: product %>
+        <% end %>
+      </div>
+    <% else %>
+      <!-- Empty State -->
+      <div class="text-center py-16">
+        <div class="text-6xl mb-4"></div>
+        <h3 class="text-2xl font-semibold text-gray-900 mb-4">No candles found</h3>
+        <p class="text-gray-600 mb-8 max-w-md mx-auto">
+          <% if @search_term.present? %>
+            We couldn't find any candles matching "<%= @search_term %>". Try adjusting your search.
+          <% else %>
+            No candles are available in this category right now.
+          <% end %>
+        </p>
+        <%= link_to 'Browse All Products', products_path, class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
 </div>

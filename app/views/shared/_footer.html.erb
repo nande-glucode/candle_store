@@ -1,0 +1,41 @@
+<footer class="bg-white border-t border-gray-200 mt-auto">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div>
+        <div class="flex items-center space-x-2 mb-4">
+          <span class="text-2xl"></span>
+          <h3 class="text-lg font-semibold text-gradient">Candle Store</h3>
+        </div>
+        <p class="text-gray-600">
+          Premium handcrafted candles made with natural ingredients and love.
+        </p>
+      </div>
+      
+      <div>
+        <h4 class="font-semibold text-gray-900 mb-4">Quick Links</h4>
+        <ul class="space-y-2 text-gray-600">
+          <li><%= link_to "All Products", products_path, class: "hover:text-brown-700" %></li>
+          <li><%= link_to "About Us", "#", class: "hover:text-brown-700" %></li>
+          <li><%= link_to "Contact", "#", class: "hover:text-brown-700" %></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h4 class="font-semibold text-gray-900 mb-4">Categories</h4>
+        <ul class="space-y-2 text-gray-600">
+          <% @categories.take(4).each do |category| %>
+            <li>
+              <%= link_to products_path(category: category), class: "hover:text-brown-700" do %>
+                <%= category_emoji(category) %> <%= category.titleize %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="border-t border-gray-200 mt-8 pt-8 text-center text-gray-500">
+      <p>&copy; <%= Date.current.year %> Candle Store. Made with ❤️ and Rails.</p>
+    </div>
+  </div>
+</footer>

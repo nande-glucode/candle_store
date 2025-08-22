@@ -1,0 +1,22 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    <div>
+      <div class="mx-auto h-12 w-12 flex items-center justify-center">
+        <span class="text-4xl"></span>
+      </div>
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        Admin Access
+      </h2>
+    </div>
+    <%= form_with url: request.path, method: :get, class: "mt-8 space-y-6" do |f| %>
+      <div>
+        <%= f.password_field :admin_password, 
+            placeholder: "Admin Password",
+            class: "input-field w-full text-center" %>
+      </div>
+      <div>
+        <%= f.submit "Enter Admin", class: "w-full btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

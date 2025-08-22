@@ -1,0 +1,71 @@
+<!-- app/views/shared/_product_card.html.erb -->
+<div class="bg-cream-100 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden border border-brown-300">
+  <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-nude-200 to-cream-300">
+    <% if product.primary_image %>
+      <img src="<%= url_for(product.primary_image) %>" 
+     alt="<%= product.name %>"
+     class="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700">
+    <% else %>
+      <div class="h-full w-full flex items-center justify-center">
+        <div class="text-center text-brown-600">
+          <div class="w-16 h-20 bg-brown-600/20 rounded-lg flex items-center justify-center mb-3 mx-auto border border-brown-400">
+            <div class="w-6 h-8 bg-brown-600 rounded-sm relative shadow-sm">
+              <div class="w-1.5 h-1.5 bg-cream-100 rounded-full absolute top-1 left-2"></div>
+            </div>
+          </div>
+          <div class="text-sm font-medium text-brown-700"><%= product.category.titleize %></div>
+        </div>
+      </div>
+    <% end %>
+    
+    <!-- Badges -->
+    <div class="absolute top-3 left-3 space-y-2">
+      <% if product.featured? %>
+        <div class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-semibold bg-brown-700 text-cream-100 shadow-lg">
+          Featured
+        </div>
+      <% end %>
+      <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-brown-600/90 text-cream-100 backdrop-blur-sm">
+        <%= product.category.titleize %>
+      </div>
+    </div>
+    
+    <div class="absolute top-3 right-3">
+      <% if !product.in_stock? %>
+        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-red-600 text-white">
+          Out of Stock
+        </span>
+      <% elsif product.low_stock? %>
+        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-earth-600 text-cream-100">
+          Low Stock
+        </span>
+      <% end %>
+    </div>
+  </div>
+  
+  <div class="p-6 space-y-4 bg-gradient-to-b from-cream-100 to-nude-100">
+    <%= link_to product_path(product), class: "block group-hover:text-brown-800 transition-colors duration-200" do %>
+      <h3 class="text-lg font-semibold text-brown-700">
+        <%= product.name %>
+      </h3>
+    <% end %>
+    
+    <p class="text-brown-600 text-sm leading-relaxed">
+      <%= truncate(product.description, length: 80) %>
+    </p>
+    
+    <div class="flex items-center justify-between pt-2 border-t border-brown-300">
+      <div class="space-y-1">
+        <div class="text-2xl font-bold text-brown-800">
+          <%= product.formatted_price %>
+        </div>
+      </div>
+      
+      <div class="flex space-x-2">
+        <%= link_to product_path(product), class: "bg-brown-600 text-cream-100 hover:bg-brown-700 px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 shadow-sm hover:shadow-md" do %>
+          View Details
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

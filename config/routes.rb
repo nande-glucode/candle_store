@@ -1,26 +1,23 @@
 Rails.application.routes.draw do
+  devise_for :users
+  root 'home#index'
+  resources :products, only: [:index, :show]
+  
+  # Admin routes
   namespace :admin do
-    get "products/index"
-    get "products/show"
-    get "products/new"
-    get "products/create"
-    get "products/edit"
-    get "products/update"
-    get "products/destroy"
+    resources :products do
+      member do
+        get :manage_images
+        post :attach_images
+        delete :remove_image
+      end
+    end
+
+    get 'logo', to: 'settings#logo'
+    patch 'logo', to: 'settings#update_logo'
+    delete 'logo', to: 'settings#destroy_logo'
   end
-  get "products/index"
-  get "products/show"
-  get "home/index"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
-
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route ("/")
-  # root "posts#index"
+  
+  # Health check
+  get "health", to: proc { [200, {}, ["OK"]] }
 end

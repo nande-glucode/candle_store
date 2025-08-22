@@ -1,1 +1,69 @@
 @import "tailwindcss";
+
+/* Define your refined earth colors without green */
+@theme {
+  --color-nude-50: #faf9f7;
+  --color-nude-100: #f5f2ed;
+  --color-nude-200: #ede6d9;
+  --color-nude-300: #e0d4c1;
+  --color-nude-400: #d1c0a3;
+  --color-nude-500: #c4ab85;
+  --color-nude-600: #b8956a;
+  --color-nude-700: #a67c52;
+  --color-nude-800: #8b6640;
+  --color-nude-900: #6d4c2f;
+
+  /* Medium-depth browns (darker than before, lighter than first version) */
+  --color-brown-50: #f8f5f2;
+  --color-brown-100: #ede7df;
+  --color-brown-200: #ddd0c0;
+  --color-brown-300: #c7b59e;
+  --color-brown-400: #ad967a;
+  --color-brown-500: #957a5f;
+  --color-brown-600: #7d6450;
+  --color-brown-700: #675344;
+  --color-brown-800: #524239;
+  --color-brown-900: #3e322b;
+
+  /* Rich warm creams */
+  --color-cream-50: #fffefb;
+  --color-cream-100: #fffdf8;
+  --color-cream-200: #fefbf0;
+  --color-cream-300: #fdf7e7;
+  --color-cream-400: #fbf1dc;
+  --color-cream-500: #f7e9c9;
+  --color-cream-600: #f0ddb0;
+  --color-cream-700: #e6cb8b;
+  --color-cream-800: #d4b552;
+  --color-cream-900: #b8941f;
+
+  /* Warm earth accents (replacing green) */
+  --color-earth-50: #f9f7f5;
+  --color-earth-100: #f1ebe5;
+  --color-earth-200: #e6d5c9;
+  --color-earth-300: #d7b8a6;
+  --color-earth-400: #c4967e;
+  --color-earth-500: #b4785e;
+  --color-earth-600: #9d6249;
+  --color-earth-700: #82503c;
+  --color-earth-800: #6b4133;
+  --color-earth-900: #4f312a;
+}
+
+/* Add any custom utilities */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

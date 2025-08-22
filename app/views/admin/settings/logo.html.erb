@@ -1,0 +1,86 @@
+<!-- app/views/admin/settings/logo.html.erb -->
+<div class="min-h-screen bg-gradient-to-br from-nude-100 to-cream-200 py-8">
+  <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="mb-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-3xl font-bold text-brown-800">Store Logo</h1>
+          <p class="text-brown-600 mt-2">Upload and manage your store logo</p>
+        </div>
+        <%= link_to "Back to Admin", admin_products_path, 
+            class: "bg-brown-600 text-cream-100 hover:bg-brown-700 px-4 py-2 rounded-lg font-medium transition-colors duration-200" %>
+      </div>
+    </div>
+
+    <!-- Current Logo -->
+    <div class="bg-cream-100 rounded-xl shadow-lg border border-brown-300 p-6 mb-8">
+      <h2 class="text-xl font-semibold text-brown-800 mb-4">Current Logo</h2>
+      
+      <% if @setting.logo_attached? %>
+        <div class="flex items-center space-x-6">
+          <div class="w-24 h-24 bg-white rounded-lg border-2 border-brown-300 flex items-center justify-center overflow-hidden">
+            <%= image_tag @setting.logo, alt: "Store Logo", class: "max-w-full max-h-full object-contain" %>
+          </div>
+          <div>
+            <p class="text-brown-700 font-medium">Logo is active</p>
+            <p class="text-sm text-brown-600">This logo appears in your header</p>
+          </div>
+        </div>
+      <% else %>
+        <div class="flex items-center space-x-6">
+          <div class="w-24 h-24 bg-gradient-to-br from-brown-800 to-earth-700 rounded-lg flex items-center justify-center">
+            <div class="w-8 h-10 bg-cream-100 rounded-sm relative">
+              <div class="w-2 h-2 bg-brown-800 rounded-full absolute top-1 left-3"></div>
+            </div>
+          </div>
+          <div>
+            <p class="text-brown-700 font-medium">No logo uploaded</p>
+            <p class="text-sm text-brown-600">Using default candle icon</p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Upload New Logo -->
+    <div class="bg-cream-100 rounded-xl shadow-lg border border-brown-300 p-6">
+      <h2 class="text-xl font-semibold text-brown-800 mb-4">
+        <%= @setting.logo_attached? ? "Replace Logo" : "Upload Logo" %>
+      </h2>
+      
+      <%= form_with model: @setting, url: admin_logo_path, method: :patch, local: true, 
+          multipart: true, class: "space-y-6" do |f| %>
+        
+        <div class="flex justify-center px-6 pt-5 pb-6 border-2 border-brown-400 border-dashed rounded-lg hover:border-brown-600 transition-colors duration-200">
+          <div class="space-y-1 text-center">
+            <svg class="mx-auto h-12 w-12 text-brown-500" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+              <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="flex text-sm text-brown-600">
+              <label for="setting_logo" class="relative cursor-pointer bg-white rounded-md font-medium text-brown-700 hover:text-brown-800 focus-within:outline-none focus-within:ring-2 focus-within:ring-brown-500">
+                <span>Upload logo</span>
+                <%= f.file_field :logo, accept: "image/*", class: "sr-only", id: "setting_logo" %>
+              </label>
+              <p class="pl-1">or drag and drop</p>
+            </div>
+            <p class="text-xs text-brown-500">PNG, JPG, SVG up to 5MB</p>
+            <p class="text-xs text-brown-500">Recommended: Square format, 200x200px minimum</p>
+          </div>
+        </div>
+
+        <div class="flex justify-between">
+          <% if @setting.logo_attached? %>
+            <%= link_to "Remove Logo", admin_logo_path, method: :delete,
+                data: { confirm: "Are you sure you want to remove the logo?" },
+                class: "bg-red-500 text-white hover:bg-red-600 px-6 py-2 rounded-lg font-medium transition-colors duration-200" %>
+          <% end %>
+          
+          <div class="flex space-x-3">
+            <%= f.submit "Upload Logo", 
+                class: "bg-brown-700 text-cream-100 hover:bg-brown-800 px-6 py-2 rounded-lg font-medium transition-colors duration-200" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

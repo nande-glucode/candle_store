@@ -1,0 +1,62 @@
+<!-- app/views/devise/sessions/new.html.erb -->
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-brown-800 via-brown-700 to-earth-700 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="absolute inset-0 bg-black/25"></div>
+  <div class="relative max-w-md w-full space-y-8">
+    <!-- Header -->
+    <div class="text-center">
+      <div class="w-20 h-20 bg-gradient-to-br from-cream-100 to-nude-200 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-xl border border-brown-600">
+        <div class="w-8 h-10 bg-brown-800 rounded-lg relative shadow-lg">
+          <div class="w-2 h-2 bg-cream-100 rounded-full absolute top-1 left-3"></div>
+        </div>
+      </div>
+      <h2 class="mt-6 text-3xl font-bold text-cream-100">
+        Welcome back
+      </h2>
+      <p class="mt-2 text-sm text-cream-200">
+        Sign in to your candle store account
+      </p>
+    </div>
+
+    <!-- Form -->
+    <div class="bg-cream-100/95 backdrop-blur-sm rounded-2xl shadow-2xl border border-brown-500/20 p-8">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), class: "space-y-6") do |f| %>
+        <!-- Email -->
+        <div>
+          <%= f.label :email, class: "block text-sm font-medium text-brown-800 mb-2" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", 
+              class: "w-full px-4 py-3 bg-nude-100 border-2 border-brown-400 rounded-lg focus:border-brown-700 focus:bg-cream-50 focus:outline-none transition-all duration-200" %>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <%= f.label :password, class: "block text-sm font-medium text-brown-800 mb-2" %>
+          <%= f.password_field :password, autocomplete: "current-password", 
+              class: "w-full px-4 py-3 bg-nude-100 border-2 border-brown-400 rounded-lg focus:border-brown-700 focus:bg-cream-50 focus:outline-none transition-all duration-200" %>
+        </div>
+
+        <!-- Remember Me -->
+        <% if devise_mapping.rememberable? %>
+          <div class="flex items-center">
+            <%= f.check_box :remember_me, class: "h-4 w-4 text-brown-700 focus:ring-brown-600 border-brown-500 rounded" %>
+            <%= f.label :remember_me, "Remember me", class: "ml-2 block text-sm text-brown-700" %>
+          </div>
+        <% end %>
+
+        <!-- Submit Button -->
+        <div>
+          <%= f.submit "Sign In", class: "w-full bg-brown-800 text-cream-100 hover:bg-earth-800 py-3 px-4 rounded-lg text-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl" %>
+        </div>
+      <% end %>
+
+      <!-- Links -->
+      <div class="space-y-3 text-center mt-6 pt-6 border-t border-brown-300">
+        <%= link_to "Forgot your password?", new_password_path(resource_name), class: "text-sm text-brown-600 hover:text-brown-800 transition-colors duration-200" %>
+        
+        <p class="text-sm text-brown-600">
+          Don't have an account?
+          <%= link_to "Sign up", new_registration_path(resource_name), class: "font-medium text-brown-700 hover:text-brown-800 transition-colors duration-200" %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

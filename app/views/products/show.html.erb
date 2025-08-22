@@ -1,4 +1,150 @@
-<div>
-  <h1 class="font-bold text-4xl">Products#show</h1>
-  <p>Find me in app/views/products/show.html.erb</p>
+<!-- app/views/products/show.html.erb -->
+<div class="min-h-screen bg-gradient-to-br from-nude-100 via-cream-200 to-brown-100">
+  <!-- Breadcrumb -->
+  <div class="bg-cream-100/80 backdrop-blur-sm border-b border-brown-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <nav class="flex" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-4">
+          <li>
+            <%= link_to root_path, class: "text-brown-600 hover:text-brown-800 transition-colors duration-200" do %>
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+              </svg>
+              <span class="sr-only">Home</span>
+            <% end %>
+          </li>
+          <li>
+            <%= link_to products_path, class: "ml-1 text-brown-600 hover:text-brown-800 md:ml-2 transition-colors duration-200" do %>
+              All Candles
+            <% end %>
+          </li>
+          <li>
+            <span class="text-brown-400 ml-1 md:ml-2" aria-current="page"><%= @product.name %></span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Product Content -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start">
+      <!-- Image Gallery -->
+      <div class="flex flex-col-reverse">
+        <!-- Main Image -->
+        <div class="w-full aspect-square">
+          <% if @product.primary_image %>
+            <div class="bg-gradient-to-br from-cream-200 to-nude-200 rounded-2xl overflow-hidden shadow-xl border border-brown-300">
+              <img src="<%= url_for(@product.primary_image) %>" 
+                alt="<%= @product.name %>"
+                class="h-full w-full object-cover">
+            </div>
+          <% else %>
+            <div class="h-full w-full bg-gradient-to-br from-cream-200 to-nude-200 rounded-2xl flex items-center justify-center border border-brown-300 shadow-xl">
+              <div class="text-center text-brown-600">
+                <div class="w-24 h-32 bg-brown-600/20 rounded-xl flex items-center justify-center mb-4 mx-auto border border-brown-400">
+                  <div class="w-12 h-16 bg-brown-600 rounded-lg relative shadow-lg">
+                    <div class="w-3 h-3 bg-cream-100 rounded-full absolute top-2 left-4.5"></div>
+                  </div>
+                </div>
+                <div class="text-lg font-medium text-brown-700"><%= @product.category.titleize %></div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Product Info -->
+      <div class="mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
+        <div class="bg-cream-100/60 backdrop-blur-sm rounded-2xl p-8 border border-brown-300 shadow-lg">
+          <!-- Category Badge -->
+          <div class="mb-4">
+            <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-brown-600 text-cream-100">
+              <%= @product.category.titleize %>
+            </span>
+          </div>
+
+          <!-- Product Name -->
+          <h1 class="text-3xl font-bold text-brown-800 sm:text-4xl mb-4">
+            <%= @product.name %>
+          </h1>
+
+          <!-- Price -->
+          <div class="mt-4 mb-8">
+            <div class="text-4xl font-bold bg-gradient-to-r from-brown-800 to-earth-700 bg-clip-text text-transparent">
+              <%= @product.formatted_price %>
+            </div>
+          </div>
+
+          <!-- Stock Status -->
+          <div class="mt-6 mb-8">
+            <div class="flex items-center">
+              <% if @product.in_stock? %>
+                <div class="flex items-center">
+                  <div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                  <span class="text-brown-700 font-medium">
+                    <%= @product.stock_quantity %> in stock
+                  </span>
+                </div>
+              <% else %>
+                <div class="flex items-center">
+                  <div class="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
+                  <span class="text-red-600 font-medium">Out of stock</span>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="mt-8">
+            <h3 class="text-lg font-semibold text-brown-800 mb-4">About this candle</h3>
+            <p class="text-brown-600 leading-relaxed text-base">
+              <%= @product.description %>
+            </p>
+          </div>
+
+          <!-- Features -->
+          <div class="mt-8">
+            <h3 class="text-lg font-semibold text-brown-800 mb-4">Features</h3>
+            <ul class="space-y-2 text-brown-600">
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-brown-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Natural soy wax blend
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-brown-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Cotton wick for clean burning
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-brown-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                40+ hour burn time
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-brown-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Handcrafted with love
+              </li>
+            </ul>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="mt-10 flex space-x-4">
+            <button class="flex-1 bg-brown-700 text-cream-100 hover:bg-brown-800 py-3 px-6 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
+              Add to Cart
+            </button>
+            <%= link_to products_path, class: "bg-brown-200 text-brown-800 hover:bg-brown-300 py-3 px-6 rounded-lg font-medium transition-all duration-200" do %>
+              Back to Shop
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

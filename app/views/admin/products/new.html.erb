@@ -1,4 +1,17 @@
-<div>
-  <h1 class="font-bold text-4xl">Admin::Products#new</h1>
-  <p>Find me in app/views/admin/products/new.html.erb</p>
+<div class="mb-8">
+  <%= link_to admin_products_path, class: "inline-flex items-center text-sm text-gray-500 hover:text-gray-700" do %>
+    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"></path>
+    </svg>
+    Back to Products
+  <% end %>
+</div>
+
+<div class="mb-8">
+  <h1 class="text-2xl font-bold text-gray-900">Add New Product</h1>
+  <p class="mt-1 text-sm text-gray-600">Create a new candle product for your store</p>
+</div>
+
+<div class="card p-6">
+  <%= render 'form', product: @product %>
 </div>

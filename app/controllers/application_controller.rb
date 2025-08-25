@@ -15,7 +15,6 @@ class ApplicationController < ActionController::Base
   private
   
   def set_categories
-    @categories = Rails.cache.fetch('product_categories', expires_in: 1.hour) do
       Product.distinct.pluck(:category).compact.sort
     end
   end

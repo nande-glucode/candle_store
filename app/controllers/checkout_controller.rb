@@ -1,7 +1,7 @@
 # app/controllers/checkout_controller.rb
 class CheckoutController < ApplicationController
   before_action :authenticate_user!
-  before_action :ensure_cart_not_empty
+  before_action :ensure_cart_not_empty, except: [:confirmation]
   
   def new
     @order = current_user.orders.build

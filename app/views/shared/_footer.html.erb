@@ -23,7 +23,7 @@
       <div>
         <h4 class="font-semibold text-gray-900 mb-4">Categories</h4>
         <ul class="space-y-2 text-gray-600">
-          <% @categories.to_a.take(4).each do |category| %>
+          <% @categories.take(4).each do |category| %>
             <li>
               <%= link_to products_path(category: category), class: "hover:text-brown-700" do %>
                 <%= category_emoji(category) %> <%= category.titleize %>

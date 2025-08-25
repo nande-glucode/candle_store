@@ -28,6 +28,34 @@ Rails.application.configure do
   config.active_storage.variant_processor = :mini_magick
   config.active_storage.draw_routes = true
 
+  config.cache_classes = true
+  config.eager_load = true
+  config.consider_all_requests_local = false
+  config.public_file_server.enabled = true
+  
+  # Compress CSS using a preprocessor.
+  config.assets.css_compressor = nil
+  config.assets.compile = false
+  config.assets.digest = true
+  
+  # Store files on Render's disk (temporary storage)
+  config.active_storage.service = :local
+  
+  config.force_ssl = true
+  config.log_level = :info
+  config.log_tags = [:request_id]
+  
+  # Use a real queuing backend for Active Job
+  config.active_job.queue_adapter = :async
+  
+  config.action_mailer.perform_caching = false
+  
+  # Don't log any deprecations.
+  config.active_support.report_deprecations = false
+  
+  config.active_record.dump_schema_after_migration = false
+
+
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   config.assume_ssl = true

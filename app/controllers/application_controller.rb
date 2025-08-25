@@ -16,6 +16,5 @@ class ApplicationController < ActionController::Base
   
   def set_categories
       Product.distinct.pluck(:category).compact.sort
-    end
   end
 end

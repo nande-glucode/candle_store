@@ -46,7 +46,8 @@ Rails.application.configure do
   config.log_tags = [:request_id]
   
   # Use a real queuing backend for Active Job
-  config.active_job.queue_adapter = :async
+  config.active_job.queue_adapter = :solid_queue
+  config.solid_queue.connects_to = { database: { writing: :queue } }
   
   config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = { host: 'https://candle-store.onrender.com' }

@@ -49,6 +49,8 @@ Rails.application.configure do
   config.active_job.queue_adapter = :async
   
   config.action_mailer.perform_caching = false
+  config.action_mailer.default_url_options = { host: 'https://candle-store.onrender.com' }
+
   
   # Don't log any deprecations.
   config.active_support.report_deprecations = false

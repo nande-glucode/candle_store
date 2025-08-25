@@ -7,12 +7,7 @@ bundle exec rails tailwindcss:build  # Important for Tailwind
 bundle exec rails db:migrate
 bundle exec rails db:seed
 
-if [ -n "$DATABASE_URL" ]; then
-  echo "DATABASE_URL found, running migrations..."
-  bundle exec rails db:migrate
-else
-  echo "DATABASE_URL not found, skipping migrations during build"
-fi
+echo "Build completed successfully. Database operations will run at startup."
 
 echo "🚀 Starting build process..."
 

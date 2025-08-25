@@ -1,0 +1,168 @@
+<!-- app/views/checkout/confirmation.html.erb -->
+<div class="min-h-screen bg-gradient-to-br from-nude-100 to-cream-200 py-8">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Success Header -->
+    <div class="text-center mb-8">
+      <div class="mx-auto h-20 w-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mb-6 shadow-lg">
+        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+      <h1 class="text-4xl font-bold text-brown-800 mb-2">Order Confirmed!</h1>
+      <p class="text-lg text-brown-600">Thank you for your demo order</p>
+      <div class="mt-4 inline-flex items-center px-4 py-2 bg-brown-600 text-cream-100 rounded-full text-sm font-medium">
+        <span class="mr-2">Order #</span>
+        <span class="font-mono"><%= @order.id.to_s.rjust(6, '0') %></span>
+      </div>
+    </div>
+
+    <!-- Demo Notice -->
+    <div class="mb-8 bg-blue-50 border-2 border-blue-200 rounded-xl p-6 text-center">
+      <div class="flex items-center justify-center mb-2">
+        <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <h3 class="text-lg font-semibold text-blue-800">Demo Confirmation</h3>
+      </div>
+      <p class="text-blue-700">This is a demonstration order. No payment was processed and no items will be shipped.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      
+      <!-- Order Details -->
+      <div class="bg-cream-100/80 backdrop-blur-sm rounded-xl shadow-lg border border-brown-300">
+        <div class="px-6 py-4 bg-gradient-to-r from-brown-600 to-brown-700 rounded-t-xl">
+          <h2 class="text-xl font-semibold text-cream-100">Order Summary</h2>
+        </div>
+        
+        <div class="p-6">
+          <!-- Order Items -->
+          <div class="space-y-4 mb-6">
+            <% @order.order_items.includes(:product).each do |order_item| %>
+              <div class="flex items-center space-x-4 p-4 bg-white rounded-lg border border-brown-200">
+                <div class="flex-shrink-0">
+                  <% if order_item.product.primary_image %>
+                    <div class="h-16 w-16 bg-gradient-to-br from-nude-200 to-cream-300 rounded-lg overflow-hidden border border-brown-300">
+                      <img src="<%= url_for(order_item.product.primary_image) %>" 
+                           alt="<%= order_item.product.name %>"
+                           class="h-full w-full object-cover">
+                    </div>
+                  <% else %>
+                    <div class="h-16 w-16 bg-gradient-to-br from-nude-200 to-cream-300 rounded-lg flex items-center justify-center border border-brown-300">
+                      <div class="w-6 h-8 bg-brown-600 rounded-sm relative">
+                        <div class="w-1.5 h-1.5 bg-cream-100 rounded-full absolute top-1 left-2"></div>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-brown-800"><%= order_item.product.name %></h4>
+                  <p class="text-sm text-brown-600"><%= order_item.product.category.titleize %></p>
+                  <div class="flex items-center justify-between mt-2">
+                    <span class="text-sm text-brown-600">Qty: <%= order_item.quantity %></span>
+                    <span class="font-semibold text-brown-800"><%= number_to_currency(order_item.total_price, unit: "R", separator: ".", delimiter: ",") %></span>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+          <!-- Order Total -->
+          <div class="border-t border-brown-200 pt-4">
+            <div class="flex justify-between items-center text-xl font-bold text-brown-800">
+              <span>Total Paid:</span>
+              <span><%= @order.formatted_total %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shipping & Contact Info -->
+      <div class="space-y-6">
+        
+        <!-- Shipping Information -->
+        <div class="bg-cream-100/80 backdrop-blur-sm rounded-xl shadow-lg border border-brown-300">
+          <div class="px-6 py-4 bg-gradient-to-r from-brown-600 to-brown-700 rounded-t-xl">
+            <h2 class="text-xl font-semibold text-cream-100">Shipping Details</h2>
+          </div>
+          
+          <div class="p-6">
+            <div class="space-y-3">
+              <div>
+                <h4 class="font-semibold text-brown-800"><%= @order.first_name %> <%= @order.last_name %></h4>
+              </div>
+              <div class="text-brown-700">
+                <p><%= @order.address %></p>
+                <p><%= @order.city %>, <%= @order.postal_code %></p>
+                <p><%= @order.country %></p>
+              </div>
+              <div class="pt-2 border-t border-brown-200">
+                <p class="text-sm text-brown-600">Email: <%= @order.email %></p>
+                <% if @order.phone.present? %>
+                  <p class="text-sm text-brown-600">Phone: <%= @order.phone %></p>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Status -->
+        <div class="bg-cream-100/80 backdrop-blur-sm rounded-xl shadow-lg border border-brown-300">
+          <div class="px-6 py-4 bg-gradient-to-r from-brown-600 to-brown-700 rounded-t-xl">
+            <h2 class="text-xl font-semibold text-cream-100">Order Status</h2>
+          </div>
+          
+          <div class="p-6">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+              <span class="font-medium text-brown-800 capitalize"><%= @order.status %></span>
+            </div>
+            <p class="text-brown-600 text-sm mb-4">Your demo order has been received and is being processed.</p>
+            
+            <!-- Mock Timeline -->
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center space-x-2">
+                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span class="text-brown-600">Order placed - <%= @order.created_at.strftime("%B %d, %Y at %I:%M %p") %></span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                <span class="text-brown-600">Processing - Estimated 1-2 business days</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                <span class="text-gray-500">Shipped - Estimated 3-5 business days</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                <span class="text-gray-500">Delivered</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="mt-8 text-center space-x-4">
+      <%= link_to products_path, 
+          class: "bg-brown-600 text-cream-100 hover:bg-brown-700 px-6 py-3 rounded-lg font-semibold transition-all duration-200 inline-flex items-center shadow-lg hover:shadow-xl" do %>
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+        </svg>
+        Continue Shopping
+      <% end %>
+      
+      <%= link_to root_path, 
+          class: "bg-brown-200 text-brown-800 hover:bg-brown-300 px-6 py-3 rounded-lg font-medium transition-all duration-200 inline-flex items-center" do %>
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+        </svg>
+        Back to Home
+      <% end %>
+    </div>
+
+  </div>
+</div>

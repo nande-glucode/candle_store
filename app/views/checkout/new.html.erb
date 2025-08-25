@@ -1,0 +1,223 @@
+<!-- app/views/checkout/new.html.erb -->
+<div class="min-h-screen bg-gradient-to-br from-nude-100 to-cream-200 py-8">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Demo Notice -->
+    <div class="mb-6 bg-brown-600 text-cream-100 rounded-lg p-4 text-center">
+      <p class="font-semibold">Demo Checkout - No Real Payment Processing</p>
+      <p class="text-sm opacity-90">This is a demonstration of the checkout flow</p>
+    </div>
+
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-brown-800">Checkout</h1>
+      <p class="text-brown-600 mt-2">Complete your order</p>
+    </div>
+
+    <div class="lg:grid lg:grid-cols-3 lg:gap-8">
+      
+      <!-- Order Form -->
+      <div class="lg:col-span-2">
+        <div class="bg-cream-100/80 backdrop-blur-sm rounded-xl shadow-lg border border-brown-300">
+          <div class="px-6 py-4 bg-gradient-to-r from-brown-600 to-brown-700 rounded-t-xl">
+            <h2 class="text-xl font-semibold text-cream-100">Shipping Information</h2>
+          </div>
+          
+          <div class="p-8">
+            <%= form_with model: @order, url: checkout_path, local: true, class: "space-y-6" do |f| %>
+              
+              <!-- Error Messages -->
+              <% if @order.errors.any? %>
+                <div class="bg-red-50 border-2 border-red-200 rounded-lg p-4">
+                  <div class="text-red-800">
+                    <h3 class="text-sm font-semibold">Please fix the following errors:</h3>
+                    <ul class="mt-2 text-sm list-disc list-inside space-y-1">
+                      <% @order.errors.full_messages.each do |message| %>
+                        <li><%= message %></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+              <% end %>
+
+              <!-- Personal Information -->
+              <div>
+                <h3 class="text-lg font-semibold text-brown-800 mb-4">Personal Details</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <%= f.label :first_name, class: "block text-sm font-semibold text-brown-800 mb-2" %>
+                    <%= f.text_field :first_name, 
+                        value: current_user.first_name,
+                        class: "w-full px-4 py-3 bg-white border-2 border-brown-300 rounded-lg focus:border-brown-600 focus:ring-2 focus:ring-brown-200 focus:outline-none transition-all duration-200 text-brown-900" %>
+                  </div>
+                  <div>
+                    <%= f.label :last_name, class: "block text-sm font-semibold text-brown-800 mb-2" %>
+                    <%= f.text_field :last_name,
+                        value: current_user.last_name,
+                        class: "w-full px-4 py-3 bg-white border-2 border-brown-300 rounded-lg focus:border-brown-600 focus:ring-2 focus:ring-brown-200 focus:outline-none transition-all duration-200 text-brown-900" %>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Contact Information -->
+              <div>
+                <h3 class="text-lg font-semibold text-brown-800 mb-4">Contact Information</h3>
+                <div class="space-y-4">
+                  <div>
+                    <%= f.label :email, class: "block text-sm font-semibold text-brown-800 mb-2" %>
+                    <%= f.email_field :email,
+                        value: current_user.email,
+                        class: "w-full px-4 py-3 bg-white border-2 border-brown-300 rounded-lg focus:border-brown-600 focus:ring-2 focus:ring-brown-200 focus:outline-none transition-all duration-200 text-brown-900" %>
+                  </div>
+                  <div>
+                    <%= f.label :phone, "Phone Number", class: "block text-sm font-semibold text-brown-800 mb-2" %>
+                    <%= f.telephone_field :phone,
+                        class: "w-full px-4 py-3 bg-white border-2 border-brown-300 rounded-lg focus:border-brown-600 focus:ring-2 focus:ring-brown-200 focus:outline-none transition-all duration-200 text-brown-900",
+                        placeholder: "083 123 4567" %>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Shipping Address -->
+              <div>
+                <h3 class="text-lg font-semibold text-brown-800 mb-4">Shipping Address</h3>
+                <div class="space-y-4">
+                  <div>
+                    <%= f.label :address, "Street Address", class: "block text-sm font-semibold text-brown-800 mb-2" %>
+                    <%= f.text_area :address, rows: 2,
+                        class: "w-full px-4 py-3 bg-white border-2 border-brown-300 rounded-lg focus:border-brown-600 focus:ring-2 focus:ring-brown-200 focus:outline-none transition-all duration-200 text-brown-900",
+                        placeholder: "123 Main Street, Suburb" %>
+                  </div>
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <%= f.label :city, class: "block text-sm font-semibold text-brown-800 mb-2" %>
+                      <%= f.text_field :city,
+                          class: "w-full px-4 py-3 bg-white border-2 border-brown-300 rounded-lg focus:border-brown-600 focus:ring-2 focus:ring-brown-200 focus:outline-none transition-all duration-200 text-brown-900",
+                          placeholder: "Johannesburg" %>
+                    </div>
+                    <div>
+                      <%= f.label :postal_code, "Postal Code", class: "block text-sm font-semibold text-brown-800 mb-2" %>
+                      <%= f.text_field :postal_code,
+                          class: "w-full px-4 py-3 bg-white border-2 border-brown-300 rounded-lg focus:border-brown-600 focus:ring-2 focus:ring-brown-200 focus:outline-none transition-all duration-200 text-brown-900",
+                          placeholder: "2000" %>
+                    </div>
+                    <div>
+                      <%= f.label :country, class: "block text-sm font-semibold text-brown-800 mb-2" %>
+                      <%= f.select :country, 
+                          options_for_select([['South Africa', 'South Africa']], 'South Africa'),
+                          {},
+                          { class: "w-full px-4 py-3 bg-white border-2 border-brown-300 rounded-lg focus:border-brown-600 focus:ring-2 focus:ring-brown-200 focus:outline-none transition-all duration-200 text-brown-900" } %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Demo Payment Section -->
+              <div class="border-t border-brown-200 pt-6">
+                <h3 class="text-lg font-semibold text-brown-800 mb-4">Payment Method</h3>
+                <div class="bg-brown-50 rounded-lg p-4 mb-4">
+                  <div class="flex items-center">
+                    <input type="radio" checked disabled class="text-brown-600 mr-3">
+                    <div class="flex items-center space-x-2">
+                      <span class="font-medium text-brown-800">Demo Card Payment</span>
+                      <div class="flex space-x-1">
+                        <div class="w-8 h-5 bg-blue-600 rounded text-white text-xs flex items-center justify-center font-bold">VISA</div>
+                        <div class="w-8 h-5 bg-red-600 rounded text-white text-xs flex items-center justify-center font-bold">MC</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold text-brown-800 mb-2">Card Number</label>
+                    <input type="text" disabled value="4111 1111 1111 1111" 
+                           class="w-full px-4 py-3 bg-gray-100 border-2 border-gray-300 rounded-lg text-gray-600" />
+                    <p class="text-xs text-brown-600 mt-1">Demo card number - no real payment processing</p>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold text-brown-800 mb-2">Expiry Date</label>
+                    <input type="text" disabled value="12/26" 
+                           class="w-full px-4 py-3 bg-gray-100 border-2 border-gray-300 rounded-lg text-gray-600" />
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold text-brown-800 mb-2">CVV</label>
+                    <input type="text" disabled value="123" 
+                           class="w-full px-4 py-3 bg-gray-100 border-2 border-gray-300 rounded-lg text-gray-600" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="pt-6">
+                <%= f.submit "Complete Demo Order", 
+                    class: "w-full bg-brown-700 text-cream-100 hover:bg-brown-800 py-4 px-6 rounded-lg font-semibold text-lg transition-all duration-200 shadow-lg hover:shadow-xl" %>
+              </div>
+
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="mt-8 lg:mt-0">
+        <div class="bg-cream-100/80 backdrop-blur-sm rounded-xl shadow-lg border border-brown-300 sticky top-8">
+          <div class="px-6 py-4 bg-gradient-to-r from-brown-600 to-brown-700 rounded-t-xl">
+            <h2 class="text-xl font-semibold text-cream-100">Order Summary</h2>
+          </div>
+          
+          <div class="p-6">
+            <!-- Cart Items -->
+            <div class="space-y-4 mb-6">
+              <% @cart_items.each do |cart_item| %>
+                <div class="flex items-center space-x-4">
+                  <div class="flex-shrink-0">
+                    <% if cart_item.product.primary_image %>
+                      <div class="h-16 w-16 bg-gradient-to-br from-nude-200 to-cream-300 rounded-lg overflow-hidden border border-brown-300">
+                        <img src="<%= url_for(cart_item.product.primary_image) %>" 
+                             alt="<%= cart_item.product.name %>"
+                             class="h-full w-full object-cover">
+                      </div>
+                    <% else %>
+                      <div class="h-16 w-16 bg-gradient-to-br from-nude-200 to-cream-300 rounded-lg flex items-center justify-center border border-brown-300">
+                        <div class="w-6 h-8 bg-brown-600 rounded-sm relative">
+                          <div class="w-1.5 h-1.5 bg-cream-100 rounded-full absolute top-1 left-2"></div>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                  <div class="flex-1">
+                    <h4 class="font-medium text-brown-800"><%= cart_item.product.name %></h4>
+                    <p class="text-sm text-brown-600">Qty: <%= cart_item.quantity %></p>
+                    <p class="font-semibold text-brown-800"><%= number_to_currency(cart_item.total_price, unit: "R", separator: ".", delimiter: ",") %></p>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+
+            <!-- Pricing Breakdown -->
+            <div class="border-t border-brown-200 pt-4 space-y-2">
+              <div class="flex justify-between text-brown-700">
+                <span>Subtotal:</span>
+                <span><%= number_to_currency(@cart_total, unit: "R", separator: ".", delimiter: ",") %></span>
+              </div>
+              <div class="flex justify-between text-brown-700">
+                <span>Shipping:</span>
+                <span class="text-green-600 font-medium">FREE</span>
+              </div>
+              <div class="flex justify-between text-brown-700">
+                <span>VAT (15%):</span>
+                <span><%= number_to_currency(@cart_total * 0.15, unit: "R", separator: ".", delimiter: ",") %></span>
+              </div>
+              <div class="border-t border-brown-300 pt-2 flex justify-between text-lg font-bold text-brown-800">
+                <span>Total:</span>
+                <span><%= number_to_currency(@cart_total * 1.15, unit: "R", separator: ".", delimiter: ",") %></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

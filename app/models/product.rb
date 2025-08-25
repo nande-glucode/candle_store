@@ -1,5 +1,7 @@
 class Product < ApplicationRecord
     has_many_attached :images
+    has_many :cart_items, dependent: :destroy
+    has_many :order_items, dependent: :destroy
 
     validates :name, presence: true, length: { maximum: 100 }
     validates :price, presence: true, numericality: { greater_than: 0, less_than: 10000 }
@@ -29,20 +31,6 @@ class Product < ApplicationRecord
   def primary_image
     images.attached? ? images.first : nil
   end
-
-  # def category_emoji
-  #   case category.downcase
-  #   when 'vanilla' then '🍦'
-  #   when 'fresh' then '🌊'
-  #   when 'floral' then '🌸'
-  #   when 'spice' then '🌶️'
-  #   when 'woodsy' then '🌲'
-  #   when 'citrus' then '🍊'
-  #   when 'seasonal' then '🍂'
-  #   when 'luxury' then '✨'
-  #   else '🕯️'
-  #   end
-  # end
 
   def stock_status_class
     return 'text-red-600' unless in_stock?

@@ -135,14 +135,30 @@
           </div>
 
           <!-- Action Buttons -->
-          <div class="mt-10 flex space-x-4">
-            <button class="flex-1 bg-brown-700 text-cream-100 hover:bg-brown-800 py-3 px-6 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
-              Add to Cart
-            </button>
-            <%= link_to products_path, class: "bg-brown-200 text-brown-800 hover:bg-brown-300 py-3 px-6 rounded-lg font-medium transition-all duration-200" do %>
-              Back to Shop
-            <% end %>
-          </div>
+<div class="mt-10 flex space-x-4">
+  <% if user_signed_in? %>
+    <% if @product.in_stock? %>
+      <%= button_to cart_items_path, 
+          params: { product_id: @product.id }, 
+          method: :post,
+          class: "flex-1 bg-brown-700 text-cream-100 hover:bg-brown-800 py-3 px-6 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl" do %>
+        Add to Cart
+      <% end %>
+    <% else %>
+      <button disabled class="flex-1 bg-gray-400 text-white py-3 px-6 rounded-lg font-semibold cursor-not-allowed">
+        Out of Stock
+      </button>
+    <% end %>
+  <% else %>
+    <%= link_to new_user_session_path, class: "flex-1 bg-brown-700 text-cream-100 hover:bg-brown-800 py-3 px-6 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl text-center" do %>
+      Sign In to Purchase
+    <% end %>
+  <% end %>
+  
+  <%= link_to products_path, class: "bg-brown-200 text-brown-800 hover:bg-brown-300 py-3 px-6 rounded-lg font-medium transition-all duration-200" do %>
+    Back to Shop
+  <% end %>
+</div>
         </div>
       </div>
     </div>
